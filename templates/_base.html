@@ -17,16 +17,63 @@
     {% compress css %}
     <link rel="stylesheet" href="{% static 'src/output.css' %}">
     {% endcompress %}
+    {% block css %}{% endblock css %}
+    <style>
+        @keyframes goRight {
+            80% {
+                right: 40px
+            }
+            100% {
+                right: -500px;
+            }
+        }
+        .messageBody{
+            animation: goRight 3s ease;
+        }
+
+        nav ul li{
+            position: relative;
+        }
+        nav ul li::after{
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            border-bottom: 1.3px solid blue;
+            width: 0%;
+            transition: all .3s linear;
+        }
+        nav ul li:hover:after{
+            width: 100%;
+        }
+    </style>
 
 </head>
+<body class="bg-green-50 dark:bg-black overflow-x-hidden">
+    <div class="container mx-auto transition-all">
+        <!-- Navbar content-->
+        {% include "navbar.html" %}
+        <!-- Message content -->
+        {% include "message.html" %}
 
-<body class="bg-green-50">
-    <div class="container mx-auto mt-4">
         {% block content %}
         {% endblock content %}
     </div>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            let messageBody = document.querySelector('.messageBody');
+            if (messageBody) {
+                setTimeout(() => {
+                    messageBody.remove(); // Removing the element
+                }, 2500); // 2000 milliseconds = 2 seconds
+            }
+        });
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.js"></script>
+    </script>
 </body>
+
 
 </html>

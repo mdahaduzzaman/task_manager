@@ -1,0 +1,200 @@
+{% load static %}
+
+<nav class="bg-white border-gray-200 sticky w-full z-10 top-0 start-0 border-b dark:bg-gray-900">
+  <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+    <a href="{% url 'home' %}" class="ps-2 flex items-center space-x-3 rtl:space-x-reverse text-blue-700">   
+        {% comment %} <img src="https://flowbite.com/docs/images/logo.svg" class="h-8" alt="Flowbite Logo" /> {% endcomment %}
+        <span class="self-center text-xl font-semibold italic">Task <br>Manager</span>
+    </a>
+    <div class="flex md:order-2">
+      <button type="button" data-collapse-toggle="navbar-search" aria-controls="navbar-search" aria-expanded="false" class="md:hidden text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2.5 me-1">
+        <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
+        </svg>
+        <span class="sr-only">Search</span>
+      </button>
+      <div class="relative hidden md:block mr-5">
+        <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+          <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
+          </svg>
+          <span class="sr-only">Search icon</span>
+        </div>
+        <form action="">
+          <input name="search" type="text" id="search-navbar" class="block w-full p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search...">
+        </form>
+      </div>
+      
+      {% comment %} profile section {% endcomment %}
+      <div class="flex gap-2 items-center mx-1 md:mx-0 md:order-2 md:space-x-0 rtl:space-x-reverse">
+        {% if request.user.is_authenticated %}
+        <button type="button" class="flex text-sm bg-gray-800 rounded-full md:me-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom">
+          <span class="sr-only">Open user menu</span>
+          <img class="w-8 h-8 rounded-full object-cover" src="{% if request.user.avatar %} {{ request.user.avatar.url }} {% else %} {% static 'images/unknown-user.png' %} {% endif %}" alt="{{ request.user.first_name }}-photo">
+        </button>
+        {% endif %}
+
+        {% comment %} Darkmode dropdown button start {% endcomment %}
+        <button type="button" class="flex dark:bg-white p-1 rounded-full" aria-expanded="false" data-dropdown-toggle="darkmode-dropdown" data-dropdown-placement="bottom">
+          <svg id="day" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386-1.591 1.591M21 12h-2.25m-.386 6.364-1.591-1.591M12 18.75V21m-4.773-4.227-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z" />
+          </svg>          
+          <svg id="night" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 hidden">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M21.752 15.002A9.72 9.72 0 0 1 18 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 0 0 3 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 0 0 9.002-5.998Z" />
+          </svg> 
+        </button>
+        {% comment %} Darkmode dropdown button end {% endcomment %}
+
+        {% comment %} Darkmode dropdown button dropdown content start {% endcomment %}
+        <div class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:divide-gray-600" id="darkmode-dropdown">
+          <ul class="py-2" aria-labelledby="user-menu-button">
+            <li class="p-3">
+              <svg id="day-dropdown" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386-1.591 1.591M21 12h-2.25m-.386 6.364-1.591-1.591M12 18.75V21m-4.773-4.227-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z" />
+              </svg>                            
+            </li>
+            <li class="p-3">
+              <svg id="night-dropdown" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 fill-black">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M21.752 15.002A9.72 9.72 0 0 1 18 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 0 0 3 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 0 0 9.002-5.998Z" />
+              </svg>                                     
+            </li>
+          </ul>
+        </div>
+        {% comment %} Darkmode dropdown button dropdown content end {% endcomment %}
+
+        <!-- Dropdown menu -->
+        <div class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600" id="user-dropdown">
+          <div class="px-4 py-3">
+            <span class="block text-sm text-gray-900 dark:text-white"> {% if request.user.first_name %} {{ request.user.first_name }} &nbsp; {{ request.user.last_name }} {% else %} {{ request.user.username }}t{% endif %}</span>
+            <span class="block text-sm  text-gray-500 truncate dark:text-gray-400">{{ request.user.email }}</span>
+          </div>
+          <ul class="py-2" aria-labelledby="user-menu-button">
+            <li>
+              <a href="" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Profile</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      
+      {% comment %} profile section {% endcomment %}
+
+
+      <button data-collapse-toggle="navbar-search" type="button" class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="navbar-search" aria-expanded="false">
+          <span class="sr-only">Open main menu</span>
+          <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15"/>
+          </svg>
+      </button>
+    </div>
+    <div class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1" id="navbar-search">
+      <div class="relative mt-3 md:hidden">
+        <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+          <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
+          </svg>
+        </div>
+        <form action="">
+          <input name="search" type="text" id="search-navbar" class="block w-full p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search...">
+        </form>
+      </div>
+      <ul class="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
+        <li>
+          <a href="{% url 'home' %}" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Home</a>
+        </li>
+        
+        {% if not request.user.is_authenticated %}
+        <li>
+          <a href="{% url 'signup' %}" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Signup</a>
+        </li>
+        <li>
+          <a href="{% url 'login' %}" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Login</a>
+        </li>
+        {% else %}
+        <li>
+          <button data-modal-target="logout-modal" data-modal-toggle="logout-modal" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Logout</button>
+        </li>
+
+        {% endif %}
+      </ul>
+      
+    </div>
+  </div>
+</nav>
+<div id="logout-modal" tabindex="-1" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+  <div class="relative p-4 w-full max-w-md max-h-full">
+      <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+          <button type="button" class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="logout-modal">
+              <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+              </svg>
+              <span class="sr-only">Close modal</span>
+          </button>
+          <div class="p-4 md:p-5 text-center">
+              <svg class="mx-auto mb-4 text-gray-400 w-12 h-12 dark:text-gray-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+              </svg>
+              <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Are you sure you want to logout?</h3>
+              <a href="{% url 'logout' %}" data-modal-hide="logout-modal" type="button" class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center me-2">
+                  Yes, I'm sure
+              </a>
+              <button data-modal-hide="logout-modal" type="button" class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">No, cancel</button>
+          </div>
+      </div>
+  </div>
+</div>
+
+
+<script>
+  const day = document.getElementById('day');
+  const night = document.getElementById('night');
+  const dayDropdown = document.getElementById('day-dropdown');
+  const nightDropdown = document.getElementById('night-dropdown');
+
+  // Retrieve mode from local storage
+  let isDarkMode = false;
+  try {
+    const storedMode = localStorage.getItem('isDarkMode');
+    if (storedMode !== null) {
+      isDarkMode = JSON.parse(storedMode);
+    }
+  } catch (error) {
+    console.error('Error accessing local storage:', error);
+  }
+
+  // Function to set the mode and update the UI
+  const setMode = (darkMode) => {
+    if (darkMode) {
+      night.classList.remove('hidden');
+      day.classList.add('hidden');
+      document.querySelector('html').classList.add('dark');
+    } else {
+      day.classList.remove('hidden');
+      night.classList.add('hidden');
+      document.querySelector('html').classList.remove('dark');
+    }
+  };
+
+  // Set initial mode
+  setMode(isDarkMode);
+
+  // Event listeners for mode toggling
+  dayDropdown.addEventListener('click', () => {
+    isDarkMode = false;
+    setMode(isDarkMode);
+    try {
+      localStorage.setItem('isDarkMode', JSON.stringify(isDarkMode));
+    } catch (error) {
+      console.error('Error accessing local storage:', error);
+    }
+  });
+
+  nightDropdown.addEventListener('click', () => {
+    isDarkMode = true;
+    setMode(isDarkMode);
+    try {
+      localStorage.setItem('isDarkMode', JSON.stringify(isDarkMode));
+    } catch (error) {
+      console.error('Error accessing local storage:', error);
+    }
+  });
+</script>
