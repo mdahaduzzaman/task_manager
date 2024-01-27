@@ -1,0 +1,5 @@
+env_task
+node_modules
+db.sqlite3
+__pycache__
+CACHE
