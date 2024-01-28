@@ -50,3 +50,18 @@ class SignupView(View):
             login(request, user)
             return redirect('home') 
         return render(request, 'users/signup.html', {'form': form})
+
+
+class ProfileUpdateView(View):
+    def get(self, request):
+        if request.user.is_authenticated:
+            form = ProfileUpdateForm(instance=request.user)  # Fetch the user instance directly
+            return render(request, 'users/profile.html', {'form': form})
+        return redirect(request.META.get('HTTP_REFERER'))
+
+    def post(self, request):
+        form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user)  # Pass request.FILES first
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Profile updated successfully")
+        return redirect(request.META.get('HTTP_REFERER'))
