@@ -21,7 +21,7 @@
                     <!-- Modal header -->
                     <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
                         <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
-                            Sign in to our platform
+                            Edit this task
                         </h3>
                         <button type="button" class="end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="editTask-modal">
                             <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
@@ -78,9 +78,9 @@
     <p class="text-sm my-3">{{ task.description|linebreaksbr }}</p>
     <div class="flex justify-between">
         <span class="text-sm font-medium">due date: {{ task.due_date }}</span>
-        <div class="text-lime-600 uppercase font-normal">STATUS: {% if task.is_completed %} <span >Complete</span> {% else %} Not-complete {% endif %}</div>
+        <div class="text-lime-600 dark:text-[#ffe500] uppercase font-medium">STATUS: {% if task.is_completed %} <span >Complete</span> {% else %} Not-complete {% endif %}</div>
     </div>
-    <span class="text-sm font-medium text-blue-600">Priority: {{ task.priority }}</span>
+    <span class="text-sm font-medium text-blue-600 dark:text-[#ffe500]">Priority: {{ task.priority }}</span>
 
 
     <div class="grid gap-4 w-[50%] mt-5">

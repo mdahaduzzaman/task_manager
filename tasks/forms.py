@@ -19,13 +19,13 @@ class TaskForm(forms.ModelForm):
         }
         error_messages = {
             'title': {
-                'required': "Title is required.",
+                'required': "Title is required",
             },
             'description': {
-                'required': "Description is required.",
+                'required': "Description is required",
             },
             'due_date': {
-                'invalid': "Enter a valid date.",
+                'invalid': "Enter a valid date",
             },
         }
 
