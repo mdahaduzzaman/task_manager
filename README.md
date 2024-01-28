@@ -2,7 +2,8 @@
 
 Welcome to TASK MANAGER
 
-![Task-manager](/static/images/task-manager-login.PNG)
+![Task-manager](/static/images/task-manager-login.PNG) <br>
+![Task-manager](/static/images/home-page.PNG)
 
 Start by cloning the repositories:
 
@@ -32,16 +33,30 @@ pip install -r requirements.txt
 
 Create a new PostgreSQL Database and collect the credentials then add this credentials to the .env file 
 
-> DB_NAME='name of the database example TASK_DB'
-> DB_USER='name of the database root user example TASK_ROOT_USER'
-> DB_PASSWORD='password of the root db user'
-> DB_HOST='host address example localhost'
-> DB_PORT='port example 5432'
+> DB_NAME='name of the database example TASK_DB' <br>
+> DB_USER='name of the database root user example TASK_ROOT_USER' <br>
+> DB_PASSWORD='password of the root db user' <br>
+> DB_HOST='host address example localhost' <br>
+> DB_PORT='port example 5432' <br>
 
 And restore the attached file named **db_backup.sql** then run the following command
 
 ```
 python manage.py runserver
+```
+
+### All credentials
+
+```
+Superuser
+username: admin 
+password: admin
+```
+
+```
+User
+username: can be found in database 
+password: mediusware
 ```
 
 The development server will start at [localhost](http://127.0.0.1:8000/)
