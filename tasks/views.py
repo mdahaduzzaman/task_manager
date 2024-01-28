@@ -16,7 +16,7 @@ class HomeView(View):
             context = {}
 
             # Get the current datetime
-            current_datetime = timezone.now()
+            current_datetime = timezone.now() - timezone.timedelta(days=1)
             tasks = Task.objects.filter(user=request.user, due_date__gt=current_datetime).order_by('is_completed')
             context['tasks'] = tasks
             # Create a new task form
@@ -27,6 +27,7 @@ class HomeView(View):
 
             return render(request, 'home.html', context)
         else:
+            messages.warning(request, "Please login first")
             return redirect('login')
 
     def post(self, request):
@@ -36,13 +37,15 @@ class HomeView(View):
             image_formset = TaskImageFormSet(request.POST, request.FILES)
             if task_form.is_valid() and image_formset.is_valid():
                 task_form.instance.user = request.user
-                task_form.save()
+                task = task_form.save()
+                image_formset = TaskImageFormSet(request.POST, request.FILES, instance=task)
+                print(image_formset)
                 image_formset.save()
                 messages.success(request, "Task Added successfully")
                 return redirect(request.META.get('HTTP_REFERER'))
             
             # Get the current datetime
-            current_datetime = timezone.now()
+            current_datetime = timezone.now() - timezone.timedelta(days=1)
             tasks = Task.objects.filter(user=request.user, due_date__gt=current_datetime).order_by('is_completed')
             context['tasks'] = tasks
             context['task_form'] = task_form
@@ -117,6 +120,9 @@ class SearchTitleView(View):
             context['image_formset'] = image_formset
 
             return render(request, 'home.html', context)
+        else:
+            messages.error(request, "Please login first")
+            return redirect(request.META.get('HTTP_REFERER'))
 
 class ExpiredTaskView(View):
     def get(self, request):
@@ -174,7 +180,7 @@ class FilterTaskView(View):
             tasks = Task.objects.filter(**filter_condition)
 
             if len(tasks) == 0:
-                messages.warning(request, "Not matched with any task")
+                messages.warning(request, "No task matched")
             else:
                 messages.success(request, f"{len(tasks)} task match with the criteria")
 

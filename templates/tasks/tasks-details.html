@@ -116,9 +116,9 @@
 
 
     <div class="grid gap-4 w-[50%] mt-5">
-        {% if task.taskimage_set.first.image %}
+        {% if task.images.first.image %}
         <div>
-            <a href="{{ task.taskimage_set.first.image.url }}" target="_blank"><img class="h-[50vh] min-w-full object-cover rounded-lg" src="{{ task.taskimage_set.first.image.url }}" alt="{{ task.title }}-image"></a>
+            <a href="{{ task.images.first.image.url }}" target="_blank"><img class="h-[50vh] min-w-full object-cover rounded-lg" src="{{ task.images.first.image.url }}" alt="{{ task.title }}-image"></a>
         </div>
         {% else %}
         <div class="relative">
@@ -127,7 +127,7 @@
         </div>
         {% endif %}
         <div class="grid grid-cols-5 gap-4">
-            {% for image in task.taskimage_set.all %}
+            {% for image in task.images.all %}
                 {% if not forloop.first %}
                 <div>
                     <a href="{{ image.image.url }}" target="_blank"><img class="h-[8vw] max-w-full object-cover rounded-lg" src="{{ image.image.url }}" alt="{{ task.title }}-image"></a>

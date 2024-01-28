@@ -29,7 +29,7 @@
       <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
       <span class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">Completed</span>
     </label>
-    <button type="submit" class="bg-blue-600 hover:bg-blue-700 hover:shadow-sm px-5 py-1 rounded-lg z-40 left-5 font-medium text-white">Filter task</button>
+    <button type="submit" class="bg-blue-600 hover:bg-blue-700 hover:shadow-sm px-5 py-1 rounded-lg z-auto left-5 font-medium text-white">Filter task</button>
   </form>
   {% comment %} filter form end {% endcomment %}
 
@@ -64,7 +64,7 @@
       <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
       <span class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">Completed</span>
     </label>
-    <button type="submit" class="bg-lime-600 hover:bg-lime-700 hover:shadow-sm px-5 py-1 rounded-lg z-40 left-5 font-medium text-white">Filter</button>
+    <button type="submit" class="bg-lime-600 hover:bg-lime-700 hover:shadow-sm px-5 py-1 rounded-lg z-auto left-5 font-medium text-white">Filter</button>
   </form>
   {% comment %} filter form end {% endcomment %}
 </div>
@@ -94,7 +94,7 @@
         </span>
       </div>
       <div class="flex -space-x-4 rtl:space-x-reverse">
-        {% for image in task.taskimage_set.all %}
+        {% for image in task.images.all %}
         <img
           class="w-10 h-10 border-2 border-white rounded-full dark:border-gray-800 hover:scale-[1.2]"
           src="{{ image.image.url }}"
@@ -118,6 +118,9 @@
   </div>
   {% endfor %}
 </div>
+
+{% else %}
+<div class="text-center my-36 text-3xl font-extrabold text-red-500">No task Found</div>
 {% endif %}
 
 <!-- addTask modal -->

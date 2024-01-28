@@ -5,8 +5,9 @@
 <!-- Main content block is start from here -->
 {% block content %}
 
-<form method="post" class="max-w-lg md:mx-auto mx-5 mt-20 md:mt-10" novalidate>
-    <h1 class="mb-4 text-2xl font-extrabold tracking-tight leading-none text-gray-900 md:text-2xl lg:text-3xl dark:text-white">Login to JobPortal</h1>
+<form method="post" class="max-w-lg md:mx-auto mx-5 mt-10 md:mt-10" novalidate>
+    <h1 class="dark:text-white text-center mb-5 italic leading-none"><span class="">Welcome</span> <br>to <br> <span class="text-2xl font-extrabold text-blue-500">Task Manager</span></h1>
+    <h1 class="mb-4 text-2xl font-extrabold tracking-tight leading-none text-gray-900 md:text-2xl lg:text-2xl dark:text-white">Login to your account</h1>
     {% csrf_token %}
     {% for field in form %}
         <div class="form-group mb-2">
@@ -20,7 +21,7 @@
         {% endif %}
     {% endfor %}
     <div class="flex justify-between">
-        <p class="my-1">Don't have an account? <a href="" class="underline text-blue-400">register</a></p>
+        <p class="my-1 dark:text-white">Don't have an account? <a href="{% url 'signup' %}" class="underline text-blue-400">register</a></p>
         <a href="" class="underline text-blue-400">forgot password</a>
     </div>
     <button type="submit" class="w-full text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Login</button>
