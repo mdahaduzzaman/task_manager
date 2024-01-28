@@ -40,6 +40,13 @@ class Task(models.Model):
     def __str__(self) -> str:
         return self.title
 
+    def delete(self, *args, **kwargs):
+        # Delete associated images first
+        for image in self.images.all():
+            image.delete()
+        # Call the superclass delete method to delete the instance
+        super().delete(*args, **kwargs)
+
 
 
 class TaskImage(models.Model):
