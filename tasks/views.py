@@ -122,7 +122,7 @@ class ExpiredTaskView(View):
             current_datetime = timezone.now()
             tasks = Task.objects.filter(user=request.user, due_date__lt=current_datetime).order_by('is_completed')
             context = {}
-            
+
             context['tasks'] = tasks
             # Create a new task form
             task_form = TaskForm()
@@ -131,3 +131,15 @@ class ExpiredTaskView(View):
             context['image_formset'] = image_formset
 
             return render(request, 'home.html', context)
+
+class DeleteTaskView(View):
+    def get(self, request, pk):
+        if request.user.is_authenticated:
+            task = Task.objects.get(pk=pk)
+            if task.user != request.user:
+                messages.error(request, "You don't have the permission to delete this task")
+            else:
+                messages.success(request, f"{task.title} deleted successfully.")
+                task.delete()
+                return redirect('home')
+            return redirect(request.META.get('HTTP_REFERER'))
