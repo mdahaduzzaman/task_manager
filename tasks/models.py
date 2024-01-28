@@ -26,7 +26,7 @@ class Task(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=255)
     description = models.TextField()
-    due_date = models.DateTimeField()
+    due_date = models.DateField()
     priority = models.CharField(max_length=10, choices=priority_choices, default='low')
     is_completed = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -47,7 +47,7 @@ class TaskImage(models.Model):
     Task Image model to store multiple image in a single Task
     """
 
-    task = models.ForeignKey(Task, on_delete=models.CASCADE)
+    task = models.ForeignKey(Task, on_delete=models.CASCADE, related_name = "images")
     image = models.ImageField(upload_to=task_image_upload_path)
 
     class Meta:

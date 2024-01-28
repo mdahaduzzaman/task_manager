@@ -3,6 +3,9 @@ from django.shortcuts import redirect, render
 from django.views import View
 from django.contrib import messages
 
+from rest_framework import viewsets
+
+from .serializers import *
 from .models import *
 from .forms import *
 
@@ -185,3 +188,11 @@ class FilterTaskView(View):
             return render(request, 'home.html', context)
 
         return redirect(request.META.get('HTTP_REFERER'))
+    
+
+
+
+# Rest api using viewsets
+class TaskViewSet(viewsets.ModelViewSet):
+    serializer_class = TaskSerializer
+    queryset = Task.objects.all()
