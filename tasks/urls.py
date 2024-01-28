@@ -9,5 +9,6 @@ urlpatterns = [
     path('task-completed-toggle/<int:pk>/', ToggleCompleted.as_view(), name="ToggleCompleted"),
 
     path('search-by-title/', SearchTitleView.as_view(), name="SearchTitleView"),
+    path('filter-task/', FilterTaskView.as_view(), name="FilterTaskView"),
     path('expired-tasks/', ExpiredTaskView.as_view(), name="ExpiredTaskView"),
 ]

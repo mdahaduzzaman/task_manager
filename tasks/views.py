@@ -143,3 +143,45 @@ class DeleteTaskView(View):
                 task.delete()
                 return redirect('home')
             return redirect(request.META.get('HTTP_REFERER'))
+        
+class FilterTaskView(View):
+    def post(self, request):
+        if request.user.is_authenticated:
+            created_at = request.POST.get('created_at')
+            due_date = request.POST.get('due_date')
+            priority = request.POST.get('priority')
+            is_completed = request.POST.get('is_completed') or False
+
+            context = {}
+
+            # Constructing the filter criteria based on received values
+            filter_condition = {}
+            filter_condition['user'] = request.user
+            # Add filter conditions for received values
+            if created_at:
+                filter_condition['created_at__lt'] = created_at
+            if due_date:
+                filter_condition['due_date__lt'] = due_date
+            if priority is not None:
+                filter_condition['priority'] = priority
+            if is_completed is not None:
+                filter_condition['is_completed'] = is_completed
+
+            # Filtering tasks based on the constructed filter condition
+            tasks = Task.objects.filter(**filter_condition)
+
+            if len(tasks) == 0:
+                messages.warning(request, "Not matched with any task")
+            else:
+                messages.success(request, f"{len(tasks)} task match with the criteria")
+
+            context['tasks'] = tasks
+            # Create a new task form
+            task_form = TaskForm()
+            image_formset = TaskImageFormSet()
+            context['task_form'] = task_form
+            context['image_formset'] = image_formset
+
+            return render(request, 'home.html', context)
+
+        return redirect(request.META.get('HTTP_REFERER'))

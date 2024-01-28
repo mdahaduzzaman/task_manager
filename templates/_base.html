@@ -27,6 +27,18 @@
                 right: -500px;
             }
         }
+        @keyframes filterContentAnimation {
+            0% {
+                height: 0;
+            }
+            100% {
+                height: 100%;
+            }
+        }
+        .mobileFilterDropdown{
+            animation: filterContentAnimation 3s ease;
+        }
+
         .messageBody{
             animation: goRight 3s ease;
         }

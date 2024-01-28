@@ -3,11 +3,70 @@
 {% block content %} 
 {% comment %} Top two navigation button {% endcomment %}
 <div class="flex justify-between mx-5">
-  <a href="{% url 'ExpiredTaskView' %}" class="bg-lime-600 hover:bg-lime-700 hover:shadow-sm px-5 py-1 rounded-lg z-40 left-5 font-medium text-white">Expired Task</a>
-  
-  <button class=" bg-lime-600 hover:bg-lime-700 hover:shadow-sm px-5 py-1 rounded-lg z-40 right-5 font-medium text-white" data-modal-target="addTask-modal" data-modal-toggle="addTask-modal">Add Task</button>
+  <a href="{% url 'ExpiredTaskView' %}" class="bg-lime-600 hover:bg-lime-700 hover:shadow-sm px-5 py-1 rounded-lg z-auto left-5 font-medium text-white">Expired Task</a>
+  {% comment %} filter form start {% endcomment %}
+  <form action="{% url 'FilterTaskView' %}" method="post" class="hidden md:flex gap-2 items-center bg-blue-200 px-5" novalidate>
+    {% csrf_token %}
+    <div class="">
+      <label for="created_at" class="text-sm font-medium text-gray-900 dark:text-white">Created at</label>
+      <input type="date" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 l px-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" name="created_at" id="created_at">
+    </div>
+    <div class="">
+      <label for="due_date" class="text-sm font-medium text-gray-900 dark:text-white">Due date</label>
+      <input type="date" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 l px-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" name="due_date" id="due_date">
+    </div>
+    <div class="">
+      <label for="priority" class="text-sm font-medium text-gray-900 dark:text-white">Priority</label>
+      <select name="priority" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 l px-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" id="priority">
+        <option value="low">Low</option>
+        <option value="medium">Medium</option>
+        <option value="high">High</option>
+      </select>
+    </div>
+    
+    <label class="relative inline-flex items-center cursor-pointer">
+      <input type="checkbox" name="is_completed" id="is_completed" class="sr-only peer" value="True">
+      <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+      <span class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">Completed</span>
+    </label>
+    <button type="submit" class="bg-blue-600 hover:bg-blue-700 hover:shadow-sm px-5 py-1 rounded-lg z-40 left-5 font-medium text-white">Filter task</button>
+  </form>
+  {% comment %} filter form end {% endcomment %}
+
+  <button class=" bg-lime-600 hover:bg-lime-700 hover:shadow-sm px-5 py-1 rounded-lg z-auto right-5 font-medium text-white" data-modal-target="addTask-modal" data-modal-toggle="addTask-modal">Add Task</button>
 </div>
 {% comment %} Top two navigation button {% endcomment %}
+<p id="mobileFilterMenuTrigger" class="md:hidden text-center m-5 bg-lime-600 hover:bg-lime-700 hover:shadow-sm px-5 py-1 rounded-lg font-medium text-white">Filter</p>
+
+<div class="hidden mobileFilterDropdown" id="mobileFilterMenu">
+  {% comment %} filter form start {% endcomment %}
+  <form action="{% url 'FilterTaskView' %}" class="flex flex-col md:hidden gap-2 m-5">
+    <div class="">
+      <label for="created_at" class="text-sm font-medium text-gray-900 dark:text-white">Created at</label>
+      <input type="date" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 l px-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" name="created_at" id="created_at">
+    </div>
+    <div class="">
+      <label for="due_date" class="text-sm font-medium text-gray-900 dark:text-white">Due date</label>
+      <input type="date" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 l px-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" name="due_date" id="due_date">
+    </div>
+    <div class="">
+      <label for="priority" class="text-sm font-medium text-gray-900 dark:text-white">Priority</label>
+      <select name="priority" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 l px-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" id="priority">
+        <option value="low">Low</option>
+        <option value="medium">Medium</option>
+        <option value="high">High</option>
+      </select>
+    </div>
+    
+    <label class="relative inline-flex items-center cursor-pointer">
+      <input type="checkbox" name="is_completed" id="is_completed" class="sr-only peer"  value="True">
+      <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+      <span class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">Completed</span>
+    </label>
+    <button type="submit" class="bg-lime-600 hover:bg-lime-700 hover:shadow-sm px-5 py-1 rounded-lg z-40 left-5 font-medium text-white">Filter</button>
+  </form>
+  {% comment %} filter form end {% endcomment %}
+</div>
 
 {% if tasks %}
 <div class="w-[90vw] my-1 mx-5">
@@ -121,4 +180,22 @@
     </div>
 </div> 
 <!-- addTask modal -->
+
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const mobileFilterMenuTrigger = document.querySelector("#mobileFilterMenuTrigger");
+    const mobileFilterMenu = document.querySelector("#mobileFilterMenu");
+
+    mobileFilterMenuTrigger.addEventListener('click', ()=>{
+      if (mobileFilterMenu.classList.contains('hidden')) {
+        mobileFilterMenu.classList.remove('hidden');
+        mobileFilterMenuTrigger.textContent = "close";
+      } else {
+        mobileFilterMenu.classList.add('hidden');
+        mobileFilterMenuTrigger.textContent = "open"; // Change to whatever text you want when opening
+      }
+    });
+  });
+</script>
 {% endblock content %}
