@@ -91,3 +91,43 @@ class ToggleCompleted(View):
             return redirect("home")
         else:
             messages.error(request, "You're not authorized to change task.")
+
+
+class SearchTitleView(View):
+    def get(self, request):
+        if request.user.is_authenticated:
+            context = {}
+
+            search_key = request.GET.get("search")
+            tasks = Task.objects.filter(user=request.user, title__icontains = search_key)
+
+            if len(tasks) == 0:
+                messages.warning(request, "Not matched with any task title")
+            else:
+                messages.success(request, f"{len(tasks)} task match with {search_key}")
+
+            context['tasks'] = tasks
+            # Create a new task form
+            task_form = TaskForm()
+            image_formset = TaskImageFormSet()
+            context['task_form'] = task_form
+            context['image_formset'] = image_formset
+
+            return render(request, 'home.html', context)
+
+class ExpiredTaskView(View):
+    def get(self, request):
+        if request.user.is_authenticated:
+            # Get the current datetime
+            current_datetime = timezone.now()
+            tasks = Task.objects.filter(user=request.user, due_date__lt=current_datetime).order_by('is_completed')
+            context = {}
+            
+            context['tasks'] = tasks
+            # Create a new task form
+            task_form = TaskForm()
+            image_formset = TaskImageFormSet()
+            context['task_form'] = task_form
+            context['image_formset'] = image_formset
+
+            return render(request, 'home.html', context)
