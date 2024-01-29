@@ -3,7 +3,7 @@
 
 <!-- Main content block is start from here -->
 {% block content %}
-<form method="post" class="max-w-lg lg:mx-auto mx-5 my-5" enctype="multipart/form-data" novalidate>
+<form method="post" class="max-w-lg lg:mx-auto mx-5 my-5" action="{% url 'signup' %}" enctype="multipart/form-data" novalidate>
     <h1 class="mb-4 text-2xl font-extrabold tracking-tight leading-none text-gray-900 md:text-2xl lg:text-2xl dark:text-white">Signup to Task Manager</h1>
     {% csrf_token %}
     {% for field in form %}

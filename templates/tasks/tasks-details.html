@@ -64,7 +64,7 @@
                     </div>
                     <!-- Modal body -->
                     <div class="p-4 md:p-5">
-                        <form method="post" enctype="multipart/form-data" novalidate>
+                        <form method="post" action="{% url 'taskDetails' %}" enctype="multipart/form-data" novalidate>
                             {% csrf_token %}
                             {% for field in task_form %}
                                 <div class="form-group mb-2">

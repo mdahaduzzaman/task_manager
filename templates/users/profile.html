@@ -5,7 +5,7 @@
 {% block content %}
 <div class="bg-green-100 mt-5 w-screen dark:bg-black">
     {% if form %}
-        <form class="max-w-lg lg:mx-auto mx-5 pt-5 pb-5 lg:pb-0 relative" method="post" novalidate  enctype="multipart/form-data">
+        <form class="max-w-lg lg:mx-auto mx-5 pt-5 pb-5 lg:pb-0 relative" action="{% url 'ProfileUpdateView' %}" method="post" novalidate  enctype="multipart/form-data">
             <div class="absolute right-5">
                 <img class="rounded-full w-10 h-10 imageContainer" src="{% if request.user.avatar %} {{ request.user.avatar.url }} {% else %} {% static 'images/unknown-user.png' %} {% endif %}" alt="{{ request.user.username }}">
             </div>
